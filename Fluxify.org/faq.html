@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" sizes="256x256" href="https://cdn.discordapp.com/avatars/1460960290912075810/bf7da0e8675ea4eae2f67889ef7d5da6.webp?size=1024">
+  <link rel="shortcut icon" href="https://cdn.discordapp.com/avatars/1460960290912075810/bf7da0e8675ea4eae2f67889ef7d5da6.webp?size=1024">
+  <link rel="apple-touch-icon" href="https://cdn.discordapp.com/avatars/1460960290912075810/bf7da0e8675ea4eae2f67889ef7d5da6.webp?size=1024">
+  <title>FluxifySwap - FAQ</title>
+
+  <style>
+    :root {
+      --bg-1: #0b0614;
+      --bg-2: #140a1f;
+      --ink: #f3ecff;
+      --muted: #b9a6d4;
+      --line: rgba(160, 120, 225, 0.26);
+      --blue: #9b5cff;
+      --orange: #c77dff;
+      --card: rgba(20, 10, 40, 0.82);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { background: var(--bg-1); }
+
+    body {
+      font-family: "Segoe UI", "Inter", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 1px 1px, rgba(120, 90, 170, 0.36) 1px, transparent 0) 0 0 / 26px 26px,
+        linear-gradient(170deg, var(--bg-2), var(--bg-1));
+      min-height: 100vh;
+      min-height: 100svh;
+      line-height: 1.55;
+      overflow-x: hidden;
+    }
+
+    * {
+      scrollbar-width: thin;
+      scrollbar-color: rgba(199, 125, 255, 0.9) rgba(20, 10, 40, 0.95);
+    }
+    *::-webkit-scrollbar { width: 10px; }
+    *::-webkit-scrollbar-track { background: rgba(20, 10, 40, 0.95); }
+    *::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, rgba(155, 92, 255, 0.95), rgba(199, 125, 255, 0.95));
+      border-radius: 999px;
+      border: 2px solid rgba(20, 10, 40, 0.95);
+    }
+
+    .wrap { width: min(1200px, 92%); margin: 0 auto; }
+
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(12px);
+      background: rgba(10, 6, 24, 0.78);
+      border-bottom: 1px solid rgba(160, 120, 225, 0.14);
+    }
+
+    .header-inner {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      text-decoration: none;
+      color: #fff;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      font-size: 1.04rem;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      padding: 0.35rem;
+      border-radius: 14px;
+      background: rgba(25, 10, 55, 0.55);
+      border: 1px solid rgba(160, 120, 225, 0.2);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+    }
+
+    .menu-toggle {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      min-height: 44px;
+      padding: 0.72rem 0.95rem;
+      border-radius: 12px;
+      border: 1px solid rgba(160, 120, 225, 0.45);
+      background: linear-gradient(180deg, rgba(35, 15, 68, 0.94), rgba(20, 10, 42, 0.95));
+      color: #f3ecff;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .menu-toggle .menu-icon {
+      display: inline-flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .menu-toggle .menu-icon span {
+      width: 16px;
+      height: 2px;
+      border-radius: 999px;
+      background: currentColor;
+      display: block;
+    }
+
+    .top-btn {
+      position: relative;
+      display: inline-block;
+      text-decoration: none;
+      color: #e9d8ff;
+      border: 1px solid rgba(160, 120, 225, 0.45);
+      background: linear-gradient(180deg, rgba(35, 15, 68, 0.9), rgba(20, 10, 42, 0.92));
+      padding: 0.52rem 1rem;
+      font-weight: 600;
+      font-size: 0.84rem;
+      text-align: center;
+      border-radius: 11px;
+      overflow: hidden;
+      transition: transform 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .top-btn::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, rgba(155, 92, 255, 0.22), transparent 45%, rgba(199, 125, 255, 0.2));
+      opacity: 0;
+      transition: opacity 0.22s ease;
+    }
+
+    .top-btn span { position: relative; z-index: 1; }
+
+    .top-btn:hover,
+    .top-btn.active {
+      transform: translateY(-2px);
+      border-color: rgba(199, 125, 255, 0.75);
+      color: #fff;
+      box-shadow: 0 10px 20px rgba(20, 10, 40, 0.55);
+    }
+
+    .top-btn:hover::before,
+    .top-btn.active::before { opacity: 1; }
+
+    .top-btn.join {
+      background: linear-gradient(92deg, #9b5cff, #c77dff);
+      border-color: rgba(199, 125, 255, 0.72);
+      color: #fff;
+    }
+
+    main { padding: 2.2rem 0 4rem; }
+
+    h1 { font-size: clamp(1.7rem, 4vw, 2.6rem); margin-bottom: 0.5rem; }
+    .intro { color: var(--muted); margin-bottom: 1rem; }
+
+    .faq-item {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: linear-gradient(160deg, rgba(35, 15, 68, 0.9), rgba(15, 5, 37, 0.88));
+      margin-bottom: 0.8rem;
+      overflow: hidden;
+      transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+      position: relative;
+    }
+
+    .faq-item::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, rgba(155, 92, 255, 0.13), transparent 40%, rgba(199, 125, 255, 0.12));
+      opacity: 0;
+      transition: opacity 0.24s ease;
+    }
+
+    .faq-item:hover {
+      transform: translateY(-2px);
+      border-color: rgba(199, 125, 255, 0.58);
+      box-shadow: 0 10px 22px rgba(20, 10, 40, 0.34);
+    }
+
+    .faq-item:hover::before { opacity: 1; }
+
+    .faq-q {
+      width: 100%;
+      border: 0;
+      background: transparent;
+      color: #fff;
+      text-align: left;
+      padding: 0.9rem 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      position: relative;
+      z-index: 1;
+    }
+
+    .faq-a {
+      display: none;
+      padding: 0 1rem 0.95rem;
+      color: #d8c8f3;
+      position: relative;
+      z-index: 1;
+    }
+
+    .faq-item.open .faq-a { display: block; }
+
+    @media (max-width: 700px) {
+      html, body { background-color: var(--bg-1); }
+      .wrap { width: min(1200px, calc(100% - 1rem)); }
+      .header-inner {
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.8rem 0 0.95rem;
+      }
+      .logo {
+        width: auto;
+        text-align: left;
+      }
+      .menu-toggle {
+        display: inline-flex;
+      }
+      .top-actions {
+        width: 100%;
+        display: none;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        justify-content: stretch;
+        gap: 0.55rem;
+        padding: 0.55rem;
+        margin-top: 0.3rem;
+      }
+      .header.menu-open .top-actions {
+        display: grid;
+      }
+      .top-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+        width: 100%;
+        font-size: 0.8rem;
+        padding: 0.58rem 0.72rem;
+      }
+      .top-btn.join { grid-column: 1 / -1; }
+      main { padding-top: 1.5rem; }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="header">
+    <div class="wrap header-inner">
+      <a class="logo" href="https://fluxify.org/">FLUXIFY</a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        <span class="menu-icon"><span></span><span></span><span></span></span>
+        <span>Menu</span>
+      </button>
+
+      <nav class="top-actions" id="site-nav">
+        <a class="top-btn" href="https://fluxify.org/terms"><span>Terms of Service</span></a>
+        <a class="top-btn" href="https://fluxify.org/fee-preview"><span>Fee Preview</span></a>
+        <a class="top-btn active" href="https://fluxify.org/faq"><span>FAQ</span></a>
+        <a class="top-btn" href="https://fluxify.org/history"><span>History</span></a>
+        <a class="top-btn" href="https://fluxify.org/teams"><span>Teams</span></a>
+        <a class="top-btn join" href="https://discord.gg/fluxify" target="_blank"><span>Join</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <h1>Frequently Asked Questions</h1>
+    <p class="intro">Quick answers before you open an exchange request.</p>
+
+    <div class="faq-item open">
+      <button class="faq-q">How do I start an exchange?</button>
+      <div class="faq-a">Click Join, enter Discord, and open a request with your pair and amount.</div>
+    </div>
+
+    <div class="faq-item open">
+      <button class="faq-q">Is there an escrow-like protection flow?</button>
+      <div class="faq-a">Yes. Funds are handled in a confirmation-based process before final release.</div>
+    </div>
+
+    <div class="faq-item open">
+      <button class="faq-q">Are fees fixed?</button>
+      <div class="faq-a">Fees vary based on volume, pair, and requested speed. Terms are shown before execution.</div>
+    </div>
+
+    <div class="faq-item open">
+      <button class="faq-q">How long does a trade take?</button>
+      <div class="faq-a">Timing depends on network conditions, pair liquidity, and confirmation speed.</div>
+    </div>
+
+    <div class="faq-item open">
+      <button class="faq-q">Where can I get help?</button>
+      <div class="faq-a">Use the official Fluxify Discord support channel for live assistance.</div>
+    </div>
+  </main>
+
+  <script>
+    const header = document.querySelector(".header");
+    const menuToggle = document.querySelector(".menu-toggle");
+    const mobileBreakpoint = window.matchMedia("(max-width: 700px)");
+
+    function syncMenuState(isOpen) {
+      header.classList.toggle("menu-open", isOpen);
+      menuToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+    }
+
+    menuToggle?.addEventListener("click", () => {
+      syncMenuState(!header.classList.contains("menu-open"));
+    });
+
+    mobileBreakpoint.addEventListener("change", (event) => {
+      if (!event.matches) syncMenuState(false);
+    });
+
+    document.querySelectorAll(".faq-q").forEach((button) => {
+      button.addEventListener("click", () => {
+        const item = button.closest(".faq-item");
+        item.classList.toggle("open");
+      });
+    });
+  </script>
+</body>
+</html>

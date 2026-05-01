@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<!-- saved from url=(0022)https://eliteswap.org/ -->
+<html lang="de"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" sizes="256x256" href="https://cdn.discordapp.com/avatars/1460960290912075810/bf7da0e8675ea4eae2f67889ef7d5da6.webp?size=1024">
+  <link rel="shortcut icon" href="https://cdn.discordapp.com/avatars/1460960290912075810/bf7da0e8675ea4eae2f67889ef7d5da6.webp?size=1024">
+  <link rel="apple-touch-icon" href="https://cdn.discordapp.com/avatars/1460960290912075810/bf7da0e8675ea4eae2f67889ef7d5da6.webp?size=1024">
+  <title>Fluxify Exchange</title>
+  <style>
+    :root {
+      --bg-1: #110514;
+      --bg-2: #19091f;
+      --ink: #ecf3ff;
+      --muted: #9cb0d4;
+      --line: rgba(154, 100, 225, 0.26);
+      --blue: #ae4aff;
+      --orange: #ee2eff;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html {
+      scroll-behavior: smooth;
+      background: var(--bg-1);
+    }
+
+    body {
+      font-family: "Segoe UI", "Inter", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 1px 1px, rgba(54, 83, 133, 0.36) 1px, transparent 0) 0 0 / 26px 26px,
+        linear-gradient(170deg, var(--bg-2), var(--bg-1));
+      min-height: 100vh;
+      min-height: 100svh;
+      line-height: 1.55;
+      overflow-x: hidden;
+    }
+
+    * {
+      scrollbar-width: thin;
+      scrollbar-color: rgba(143, 46, 255, 0.9) rgba(35, 7, 46, 0.95);
+    }
+    *::-webkit-scrollbar { width: 10px; }
+    *::-webkit-scrollbar-track { background: rgba(43, 7, 46, 0.95); }
+    *::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, rgba(158, 74, 255, 0.95), rgba(126, 46, 255, 0.95));
+      border-radius: 999px;
+      border: 2px solid rgba(37, 7, 46, 0.95);
+    }
+
+    .wrap { width: min(1200px, 92%); margin: 0 auto; }
+
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(12px);
+      background: rgba(19, 5, 24, 0.78);
+      border-bottom: 1px solid rgba(171, 92, 217, 0.14);
+    }
+
+    .header-inner {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      text-decoration: none;
+      color: #fff;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      font-size: 1.04rem;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      padding: 0.35rem;
+      border-radius: 14px;
+      background: rgba(43, 13, 55, 0.55);
+      border: 1px solid rgba(160, 103, 235, 0.2);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+    }
+
+    .menu-toggle {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      min-height: 44px;
+      padding: 0.72rem 0.95rem;
+      border-radius: 12px;
+      border: 1px solid rgba(148, 96, 231, 0.45);
+      background: linear-gradient(180deg, rgba(47, 15, 68, 0.94), rgba(34, 9, 42, 0.95));
+      color: #e8f1ff;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .menu-toggle .menu-icon {
+      display: inline-flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .menu-toggle .menu-icon span {
+      width: 16px;
+      height: 2px;
+      border-radius: 999px;
+      background: currentColor;
+      display: block;
+    }
+
+    .top-btn {
+      position: relative;
+      display: inline-block;
+      text-decoration: none;
+      color: #d9e8ff;
+      border: 1px solid rgba(155, 96, 231, 0.45);
+      background: linear-gradient(180deg, rgba(42, 15, 68, 0.9), rgba(26, 9, 42, 0.92));
+      padding: 0.52rem 1rem;
+      font-weight: 600;
+      font-size: 0.84rem;
+      text-align: center;
+      border-radius: 11px;
+      overflow: hidden;
+      transition: transform 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .top-btn::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, rgba(167, 74, 255, 0.22), transparent 45%, rgba(178, 46, 255, 0.2));
+      opacity: 0;
+      transition: opacity 0.22s ease;
+    }
+
+    .top-btn span { position: relative; z-index: 1; }
+
+    .top-btn:hover {
+      transform: translateY(-2px);
+      border-color: rgba(171, 46, 255, 0.75);
+      color: #fff;
+      box-shadow: 0 10px 20px rgba(25, 5, 34, 0.55);
+    }
+
+    .top-btn:hover::before { opacity: 1; }
+
+    .top-btn.join {
+      background: linear-gradient(92deg, #9046f0, #892eff);
+      border-color: rgba(156, 103, 255, 0.72);
+      color: #fff;
+    }
+
+    .hero {
+      min-height: calc(100vh - 72px);
+      padding: 2.4rem 0 4.2rem;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      position: relative;
+      overflow: visible;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: auto 50% -360px;
+      width: 900px;
+      height: 900px;
+      transform: translateX(-50%);
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(137, 74, 255, 0.24) 0%, rgba(154, 46, 255, 0.12) 35%, transparent 68%);
+      filter: blur(70px);
+      pointer-events: none;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.9rem, 10vw, 7.2rem);
+      line-height: 1;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 0.8rem;
+      text-shadow: 0 0 35px rgba(137, 74, 255, 0.35);
+    }
+
+    .hero h1 span { color: var(--orange); }
+
+    .hero p {
+      color: var(--muted);
+      max-width: 760px;
+      margin: 0 auto;
+      font-size: clamp(1rem, 2.2vw, 1.24rem);
+    }
+
+    .hero-cta { margin-top: 1.6rem; }
+
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+      color: #fff;
+      font-weight: 700;
+      border-radius: 999px;
+      padding: 0.9rem 1.45rem;
+      background: linear-gradient(90deg, var(--blue), var(--orange));
+      box-shadow: 0 14px 36px rgba(137, 46, 255, 0.22);
+      transition: transform 0.2s ease;
+    }
+
+    .cta-btn:hover { transform: translateY(-2px); }
+
+    .scroll-hint {
+      position: absolute;
+      left: 50%;
+      bottom: 18px;
+      transform: translateX(-50%);
+      text-decoration: none;
+      color: #d8c6f9;
+      font-size: 0.83rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      animation: floatHint 1.8s ease-in-out infinite;
+    }
+
+    .scroll-hint::after {
+      content: " v";
+      color: var(--orange);
+      font-weight: 800;
+    }
+
+    .planet-section {
+      padding: 5rem 0 4.9rem;
+      position: relative;
+      overflow: visible;
+    }
+
+    .planet-shell {
+      position: relative;
+      width: min(700px, 92vw);
+      margin: 0 auto;
+      aspect-ratio: 1 / 1;
+      overflow: visible;
+    }
+
+    .planet-halo {
+      position: absolute;
+      inset: -8%;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(133, 82, 228, 0.3), rgba(43, 21, 78, 0.06) 58%, transparent 74%);
+      filter: blur(24px);
+    }
+
+    .ring {
+      position: absolute;
+      inset: 7%;
+      border-radius: 50%;
+      border: 1px solid rgba(160, 125, 255, 0.18);
+      box-shadow: inset 0 0 22px rgba(122, 74, 255, 0.16), 0 0 18px rgba(255, 146, 46, 0.15);
+      animation: spin 22s linear infinite;
+    }
+
+    .ring.b {
+      inset: 16%;
+      animation-duration: 15s;
+      animation-direction: reverse;
+      border-color: rgba(154, 46, 255, 0.2);
+    }
+
+    .planet {
+      position: absolute;
+      inset: 21%;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 36% 32%, rgba(255, 255, 255, 0.25) 0%, transparent 32%),
+        radial-gradient(circle at 72% 68%, rgba(126, 46, 255, 0.3) 0%, transparent 26%),
+        radial-gradient(circle at 20% 78%, rgba(167, 74, 255, 0.32) 0%, transparent 26%),
+        linear-gradient(160deg, #341854, #250b2c 65%, #160519);
+      box-shadow: inset 0 -26px 44px rgba(0, 0, 0, 0.5), inset 0 12px 26px rgba(242, 145, 255, 0.18), 0 40px 80px rgba(17, 4, 28, 0.72);
+      overflow: hidden;
+      animation: spinPlanet 28s linear infinite;
+    }
+
+    .planet::before, .planet::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      opacity: 0.7;
+    }
+
+    .planet::before {
+      width: 120%;
+      height: 42px;
+      left: -8%;
+      top: 30%;
+      background: linear-gradient(90deg, rgba(161, 46, 255, 0.24), rgba(149, 92, 255, 0.3), rgba(137, 46, 255, 0.18));
+      filter: blur(2px);
+    }
+
+    .planet::after {
+      width: 88%;
+      height: 34px;
+      left: 7%;
+      bottom: 22%;
+      background: linear-gradient(90deg, rgba(148, 82, 255, 0.24), rgba(126, 46, 255, 0.22));
+    }
+
+    .stars {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      border-radius: 50%;
+      background: #fff;
+      opacity: 0.62;
+      animation: twinkle 3s ease-in-out infinite;
+    }
+
+    .section-head { text-align: center; margin-bottom: 1.3rem; }
+    .section-head h2 { font-size: clamp(1.4rem, 3vw, 2.1rem); margin-bottom: 0.4rem; }
+    .section-head p { color: var(--muted); max-width: 740px; margin: 0 auto; }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+      margin-top: 1.2rem;
+    }
+
+    .feature {
+      background: linear-gradient(160deg, rgba(40, 16, 68, 0.9), rgba(25, 7, 37, 0.88));
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 1.1rem;
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, rgba(152, 74, 255, 0.14), transparent 38%, rgba(143, 46, 255, 0.12));
+      opacity: 0;
+      transition: opacity 0.24s ease;
+    }
+
+    .feature:hover {
+      transform: translateY(-5px);
+      border-color: rgba(143, 46, 255, 0.58);
+      box-shadow: 0 14px 28px rgba(15, 4, 28, 0.38);
+    }
+
+    .feature:hover::before { opacity: 1; }
+
+    .feature .icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 11px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 0.6rem;
+      background: linear-gradient(145deg, rgba(152, 74, 255, 0.24), rgba(109, 46, 255, 0.2));
+      border: 1px solid rgba(120, 165, 248, 0.32);
+      font-weight: 800;
+      color: #fff;
+      position: relative;
+      z-index: 1;
+    }
+
+    .feature h3, .feature p { position: relative; z-index: 1; }
+    .feature h3 { margin-bottom: 0.35rem; }
+    .feature p { color: #ddc6f7; font-size: 0.93rem; }
+
+    .process { margin-top: 4.3rem; padding-bottom: 5rem; }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.8rem;
+      margin-top: 1.2rem;
+    }
+
+    .step {
+      background: rgba(30, 8, 43, 0.86);
+      border: 1px dashed rgba(143, 96, 230, 0.54);
+      border-radius: 13px;
+      padding: 0.9rem;
+      text-align: center;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .step:hover { transform: translateY(-3px); border-color: rgba(143, 46, 255, 0.72); }
+    .step b { display: block; margin-bottom: 0.2rem; }
+    .step span { color: #d1baf5; font-size: 0.88rem; }
+
+    .end-cta { text-align: center; margin-top: 2.2rem; }
+    .end-cta p { color: var(--muted); margin: 0.4rem 0 1rem; }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px) scale(0.986);
+      transition: opacity 0.68s ease, transform 0.68s ease;
+    }
+
+    .reveal.show { opacity: 1; transform: translateY(0) scale(1); }
+
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    @keyframes spinPlanet { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; transform: translateY(0); }
+      50% { opacity: 0.9; transform: translateY(-2px); }
+    }
+    @keyframes floatHint {
+      0%, 100% { transform: translate(-50%, 0); }
+      50% { transform: translate(-50%, 6px); }
+    }
+
+    @media (max-width: 960px) {
+      .feature-grid { grid-template-columns: 1fr 1fr; }
+      .steps { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 700px) {
+      html, body { background-color: var(--bg-1); }
+      .wrap { width: min(1200px, calc(100% - 1rem)); }
+      .header-inner {
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.8rem 0 0.95rem;
+      }
+      .logo {
+        width: auto;
+        text-align: left;
+      }
+      .menu-toggle {
+        display: inline-flex;
+      }
+      .top-actions {
+        width: 100%;
+        display: none;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        justify-content: stretch;
+        gap: 0.55rem;
+        padding: 0.55rem;
+        margin-top: 0.3rem;
+      }
+      .header.menu-open .top-actions {
+        display: grid;
+      }
+      .top-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+        width: 100%;
+      }
+      .top-btn.join { grid-column: 1 / -1; }
+      .feature-grid, .steps { grid-template-columns: 1fr; }
+      .hero {
+        min-height: calc(100svh - 148px);
+        padding-top: 1.4rem;
+        padding-bottom: 5.25rem;
+      }
+      .top-btn { font-size: 0.8rem; padding: 0.58rem 0.72rem; }
+      .scroll-hint { bottom: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="wrap header-inner">
+      <a class="logo" href="https://fluxify.org/">FLUXIFY</a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        <span class="menu-icon" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span>Menu</span>
+      </button>
+      <nav class="top-actions" id="site-nav" aria-label="Quick Links">
+        <a class="top-btn" href="https://fluxify.org/terms"><span>Terms of Service</span></a>
+        <a class="top-btn" href="https://fluxify.org/fee-preview"><span>Fee Preview</span></a>
+        <a class="top-btn" href="https://fluxify.org/faq"><span>FAQ</span></a>
+        <a class="top-btn join" href="https://discord.gg/fluxify" target="_blank" rel="noopener noreferrer"><span>Join</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero wrap">
+    <div>
+      <h1>FLUXIFY<span>Swap</span></h1>
+      <p>Modern exchange service for fast and secure crypto swaps. Clean process, transparent fees, strong support.</p>
+      <div class="hero-cta">
+        <a class="cta-btn" href="https://discord.gg/fluxify" target="_blank" rel="noopener noreferrer">Start Exchange</a>
+      </div>
+    </div>
+    <a class="scroll-hint" href="https://fluxify.org/#planet">Scroll Down</a>
+  </section>
+
+  <section class="planet-section wrap reveal show" id="planet">
+    <div class="section-head">
+      <h2>Orbit-Grade Exchange Experience</h2>
+      <p>Visual first. Motion first. A distinctive exchange interface designed to feel premium, not generic.</p>
+    </div>
+
+    <div class="planet-shell">
+      <div class="planet-halo"></div>
+      <div class="ring"></div>
+      <div class="ring b"></div>
+      <div class="planet"></div>
+      <div class="stars" id="stars"><span class="star" style="left: 72.5607%; top: 59.1336%; opacity: 0.62; animation-delay: 1.70857s; animation-duration: 2.33241s;"></span><span class="star" style="left: 47.9634%; top: 8.22943%; opacity: 0.57; animation-delay: 2.33018s; animation-duration: 2.97374s;"></span><span class="star" style="left: 67.1062%; top: 90.1555%; opacity: 0.25; animation-delay: 2.60962s; animation-duration: 4.43251s;"></span><span class="star" style="left: 27.6537%; top: 90.4254%; opacity: 0.25; animation-delay: 2.47447s; animation-duration: 3.81169s;"></span><span class="star" style="left: 77.0264%; top: 69.684%; opacity: 0.59; animation-delay: 2.15851s; animation-duration: 3.47165s;"></span><span class="star" style="left: 97.963%; top: 32.6224%; opacity: 0.69; animation-delay: 1.96438s; animation-duration: 2.59781s;"></span><span class="star" style="left: 14.7623%; top: 33.149%; opacity: 0.78; animation-delay: 2.01421s; animation-duration: 4.56221s;"></span><span class="star" style="left: 82.0157%; top: 95.8928%; opacity: 0.79; animation-delay: 0.399119s; animation-duration: 4.81307s;"></span><span class="star" style="left: 49.9715%; top: 36.937%; opacity: 0.41; animation-delay: 2.60151s; animation-duration: 4.587s;"></span><span class="star" style="left: 54.0554%; top: 98.0157%; opacity: 0.72; animation-delay: 2.74535s; animation-duration: 2.40361s;"></span><span class="star" style="left: 96.3533%; top: 74.6766%; opacity: 0.44; animation-delay: 1.70282s; animation-duration: 3.17177s;"></span><span class="star" style="left: 30.3041%; top: 69.5316%; opacity: 0.8; animation-delay: 2.51849s; animation-duration: 4.92465s;"></span><span class="star" style="left: 32.8958%; top: 66.8559%; opacity: 0.3; animation-delay: 0.288274s; animation-duration: 3.66275s;"></span><span class="star" style="left: 17.9359%; top: 44.9163%; opacity: 0.63; animation-delay: 0.792764s; animation-duration: 2.32585s;"></span><span class="star" style="left: 59.8144%; top: 56.5124%; opacity: 0.8; animation-delay: 0.907571s; animation-duration: 4.35755s;"></span><span class="star" style="left: 84.0639%; top: 30.6585%; opacity: 0.88; animation-delay: 0.834717s; animation-duration: 2.92383s;"></span><span class="star" style="left: 30.5255%; top: 98.9683%; opacity: 0.71; animation-delay: 0.0672184s; animation-duration: 4.10703s;"></span><span class="star" style="left: 38.3972%; top: 16.3725%; opacity: 0.75; animation-delay: 1.90241s; animation-duration: 2.54718s;"></span><span class="star" style="left: 86.0419%; top: 37.2221%; opacity: 0.26; animation-delay: 1.30065s; animation-duration: 2.35232s;"></span><span class="star" style="left: 93.7019%; top: 65.2611%; opacity: 0.48; animation-delay: 2.673s; animation-duration: 4.1335s;"></span><span class="star" style="left: 51.0286%; top: 95.9837%; opacity: 0.6; animation-delay: 2.14303s; animation-duration: 4.2105s;"></span><span class="star" style="left: 28.8824%; top: 91.2523%; opacity: 0.55; animation-delay: 2.49866s; animation-duration: 2.94317s;"></span><span class="star" style="left: 72.6823%; top: 15.544%; opacity: 0.89; animation-delay: 1.00863s; animation-duration: 2.725s;"></span><span class="star" style="left: 9.43502%; top: 54.5422%; opacity: 0.9; animation-delay: 2.55205s; animation-duration: 3.65014s;"></span><span class="star" style="left: 32.3582%; top: 80.0519%; opacity: 0.82; animation-delay: 1.94247s; animation-duration: 3.55629s;"></span><span class="star" style="left: 93.9649%; top: 9.54481%; opacity: 0.24; animation-delay: 2.79499s; animation-duration: 4.2351s;"></span><span class="star" style="left: 73.6403%; top: 15.3493%; opacity: 0.24; animation-delay: 1.33649s; animation-duration: 2.93953s;"></span><span class="star" style="left: 58.0098%; top: 89.3779%; opacity: 0.32; animation-delay: 1.09027s; animation-duration: 3.27916s;"></span><span class="star" style="left: 55.9746%; top: 95.2991%; opacity: 0.31; animation-delay: 1.66915s; animation-duration: 4.94477s;"></span><span class="star" style="left: 65.1843%; top: 45.8857%; opacity: 0.27; animation-delay: 0.527324s; animation-duration: 3.19263s;"></span><span class="star" style="left: 88.8216%; top: 19.8015%; opacity: 0.49; animation-delay: 0.343931s; animation-duration: 2.38291s;"></span><span class="star" style="left: 0.193334%; top: 81.8242%; opacity: 0.22; animation-delay: 2.47486s; animation-duration: 4.49833s;"></span><span class="star" style="left: 86.1376%; top: 56.7977%; opacity: 0.67; animation-delay: 1.45441s; animation-duration: 3.16042s;"></span><span class="star" style="left: 53.1916%; top: 63.2244%; opacity: 0.43; animation-delay: 1.63706s; animation-duration: 3.33857s;"></span><span class="star" style="left: 61.7769%; top: 54.918%; opacity: 0.46; animation-delay: 0.100739s; animation-duration: 4.79499s;"></span><span class="star" style="left: 50.4582%; top: 11.6285%; opacity: 0.5; animation-delay: 0.0942893s; animation-duration: 4.80219s;"></span><span class="star" style="left: 85.3722%; top: 19.9812%; opacity: 0.17; animation-delay: 0.0116698s; animation-duration: 3.78358s;"></span><span class="star" style="left: 12.5468%; top: 69.3562%; opacity: 0.23; animation-delay: 2.34185s; animation-duration: 2.50959s;"></span><span class="star" style="left: 41.9711%; top: 60.3149%; opacity: 0.59; animation-delay: 0.861786s; animation-duration: 4.50471s;"></span><span class="star" style="left: 38.7471%; top: 80.9567%; opacity: 0.39; animation-delay: 2.68167s; animation-duration: 2.45728s;"></span><span class="star" style="left: 51.8159%; top: 31.007%; opacity: 0.65; animation-delay: 0.650472s; animation-duration: 4.49439s;"></span><span class="star" style="left: 62.2503%; top: 1.00704%; opacity: 0.44; animation-delay: 0.23919s; animation-duration: 3.95159s;"></span><span class="star" style="left: 97.6114%; top: 58.8978%; opacity: 0.31; animation-delay: 0.268004s; animation-duration: 4.31164s;"></span><span class="star" style="left: 37.5715%; top: 23.5321%; opacity: 0.82; animation-delay: 2.64089s; animation-duration: 4.20341s;"></span><span class="star" style="left: 95.9353%; top: 52.2997%; opacity: 0.44; animation-delay: 0.301804s; animation-duration: 2.34516s;"></span><span class="star" style="left: 45.6445%; top: 35.0897%; opacity: 0.28; animation-delay: 2.59419s; animation-duration: 3.54723s;"></span><span class="star" style="left: 78.8545%; top: 13.324%; opacity: 0.44; animation-delay: 1.99832s; animation-duration: 3.4112s;"></span><span class="star" style="left: 48.3976%; top: 82.0508%; opacity: 0.35; animation-delay: 0.796767s; animation-duration: 2.96844s;"></span><span class="star" style="left: 23.5857%; top: 18.5213%; opacity: 0.33; animation-delay: 2.04297s; animation-duration: 4.34276s;"></span><span class="star" style="left: 92.668%; top: 11.5654%; opacity: 0.58; animation-delay: 1.34954s; animation-duration: 2.22944s;"></span><span class="star" style="left: 21.5218%; top: 85.2325%; opacity: 0.81; animation-delay: 0.414463s; animation-duration: 2.75531s;"></span><span class="star" style="left: 72.4373%; top: 56.9386%; opacity: 0.37; animation-delay: 1.6399s; animation-duration: 3.8792s;"></span><span class="star" style="left: 25.7064%; top: 32.1156%; opacity: 0.62; animation-delay: 2.68002s; animation-duration: 2.71452s;"></span><span class="star" style="left: 37.3844%; top: 14.5508%; opacity: 0.83; animation-delay: 0.792089s; animation-duration: 2.79881s;"></span><span class="star" style="left: 31.0922%; top: 47.1579%; opacity: 0.38; animation-delay: 0.53036s; animation-duration: 3.66792s;"></span><span class="star" style="left: 28.3116%; top: 22.372%; opacity: 0.85; animation-delay: 0.27847s; animation-duration: 2.77299s;"></span><span class="star" style="left: 45.3739%; top: 20.0677%; opacity: 0.78; animation-delay: 0.440991s; animation-duration: 2.23809s;"></span><span class="star" style="left: 1.08061%; top: 18.692%; opacity: 0.87; animation-delay: 0.782755s; animation-duration: 4.80846s;"></span><span class="star" style="left: 65.4136%; top: 26.7463%; opacity: 0.58; animation-delay: 1.23127s; animation-duration: 3.6153s;"></span><span class="star" style="left: 59.2893%; top: 81.782%; opacity: 0.77; animation-delay: 2.18453s; animation-duration: 4.12736s;"></span><span class="star" style="left: 90.8704%; top: 83.913%; opacity: 0.83; animation-delay: 1.50936s; animation-duration: 3.93328s;"></span><span class="star" style="left: 69.894%; top: 66.3542%; opacity: 0.78; animation-delay: 2.54109s; animation-duration: 3.08245s;"></span><span class="star" style="left: 87.433%; top: 77.4987%; opacity: 0.32; animation-delay: 1.87077s; animation-duration: 4.80437s;"></span><span class="star" style="left: 64.587%; top: 42.1867%; opacity: 0.16; animation-delay: 0.527221s; animation-duration: 4.49936s;"></span><span class="star" style="left: 50.6569%; top: 74.5609%; opacity: 0.22; animation-delay: 1.15201s; animation-duration: 4.12714s;"></span><span class="star" style="left: 10.0876%; top: 25.5114%; opacity: 0.57; animation-delay: 0.758774s; animation-duration: 3.69794s;"></span><span class="star" style="left: 2.73981%; top: 43.7209%; opacity: 0.86; animation-delay: 2.04034s; animation-duration: 3.67001s;"></span><span class="star" style="left: 55.8103%; top: 87.8105%; opacity: 0.2; animation-delay: 0.0470598s; animation-duration: 2.60896s;"></span><span class="star" style="left: 76.7975%; top: 2.56376%; opacity: 0.22; animation-delay: 2.5076s; animation-duration: 3.87405s;"></span><span class="star" style="left: 7.33812%; top: 65.8779%; opacity: 0.2; animation-delay: 1.94376s; animation-duration: 4.35354s;"></span><span class="star" style="left: 31.8614%; top: 6.58129%; opacity: 0.21; animation-delay: 1.39371s; animation-duration: 2.77635s;"></span><span class="star" style="left: 78.6777%; top: 87.436%; opacity: 0.64; animation-delay: 2.41926s; animation-duration: 3.34705s;"></span><span class="star" style="left: 18.7822%; top: 14.9329%; opacity: 0.88; animation-delay: 0.0487427s; animation-duration: 4.23432s;"></span><span class="star" style="left: 47.4351%; top: 51.4565%; opacity: 0.15; animation-delay: 0.469829s; animation-duration: 4.98819s;"></span><span class="star" style="left: 36.0838%; top: 68.057%; opacity: 0.36; animation-delay: 0.126912s; animation-duration: 3.78332s;"></span><span class="star" style="left: 46.5567%; top: 7.24871%; opacity: 0.6; animation-delay: 1.34721s; animation-duration: 4.80068s;"></span><span class="star" style="left: 76.5889%; top: 84.9097%; opacity: 0.67; animation-delay: 2.72314s; animation-duration: 3.77422s;"></span><span class="star" style="left: 91.7454%; top: 34.6666%; opacity: 0.65; animation-delay: 1.04156s; animation-duration: 3.81479s;"></span><span class="star" style="left: 19.3249%; top: 55.2848%; opacity: 0.87; animation-delay: 1.0475s; animation-duration: 4.7462s;"></span><span class="star" style="left: 89.9151%; top: 55.8723%; opacity: 0.53; animation-delay: 2.26175s; animation-duration: 2.83687s;"></span><span class="star" style="left: 51.4004%; top: 75.9727%; opacity: 0.2; animation-delay: 1.50446s; animation-duration: 3.48102s;"></span><span class="star" style="left: 57.8268%; top: 43.4207%; opacity: 0.55; animation-delay: 1.90705s; animation-duration: 3.48048s;"></span><span class="star" style="left: 47.5034%; top: 21.3508%; opacity: 0.27; animation-delay: 0.384897s; animation-duration: 3.76204s;"></span><span class="star" style="left: 17.2077%; top: 21.8937%; opacity: 0.37; animation-delay: 1.41594s; animation-duration: 2.7952s;"></span><span class="star" style="left: 84.4561%; top: 39.0969%; opacity: 0.23; animation-delay: 0.908766s; animation-duration: 4.03493s;"></span><span class="star" style="left: 75.2288%; top: 13.3151%; opacity: 0.75; animation-delay: 1.87342s; animation-duration: 4.04173s;"></span><span class="star" style="left: 60.5297%; top: 35.8795%; opacity: 0.57; animation-delay: 2.20743s; animation-duration: 3.07372s;"></span><span class="star" style="left: 23.5859%; top: 73.9847%; opacity: 0.35; animation-delay: 1.02443s; animation-duration: 3.83786s;"></span><span class="star" style="left: 33.8535%; top: 85.1274%; opacity: 0.86; animation-delay: 1.40775s; animation-duration: 3.16434s;"></span><span class="star" style="left: 69.4856%; top: 6.43126%; opacity: 0.32; animation-delay: 0.593602s; animation-duration: 2.22065s;"></span><span class="star" style="left: 17.9687%; top: 54.7446%; opacity: 0.37; animation-delay: 2.31473s; animation-duration: 3.82396s;"></span><span class="star" style="left: 43.0101%; top: 93.8177%; opacity: 0.43; animation-delay: 2.57736s; animation-duration: 3.70705s;"></span><span class="star" style="left: 49.6138%; top: 79.2328%; opacity: 0.4; animation-delay: 1.37995s; animation-duration: 2.58847s;"></span><span class="star" style="left: 41.4057%; top: 85.8378%; opacity: 0.36; animation-delay: 0.291992s; animation-duration: 4.10932s;"></span><span class="star" style="left: 64.2809%; top: 55.3238%; opacity: 0.2; animation-delay: 2.32498s; animation-duration: 2.8703s;"></span><span class="star" style="left: 16.0357%; top: 5.99693%; opacity: 0.72; animation-delay: 0.943602s; animation-duration: 4.8766s;"></span><span class="star" style="left: 51.0632%; top: 23.6731%; opacity: 0.57; animation-delay: 2.1285s; animation-duration: 2.70855s;"></span><span class="star" style="left: 8.05437%; top: 82.0331%; opacity: 0.63; animation-delay: 1.78921s; animation-duration: 4.06011s;"></span><span class="star" style="left: 42.2663%; top: 67.3547%; opacity: 0.61; animation-delay: 1.35134s; animation-duration: 2.29914s;"></span><span class="star" style="left: 3.19751%; top: 63.0349%; opacity: 0.85; animation-delay: 0.13181s; animation-duration: 3.69333s;"></span><span class="star" style="left: 25.7911%; top: 28.8538%; opacity: 0.52; animation-delay: 1.12756s; animation-duration: 2.79807s;"></span><span class="star" style="left: 39.9131%; top: 99.726%; opacity: 0.2; animation-delay: 2.72767s; animation-duration: 2.38933s;"></span><span class="star" style="left: 75.569%; top: 28.0061%; opacity: 0.77; animation-delay: 0.8985s; animation-duration: 2.72577s;"></span><span class="star" style="left: 71.7525%; top: 51.1609%; opacity: 0.67; animation-delay: 0.316773s; animation-duration: 2.83875s;"></span><span class="star" style="left: 39.5875%; top: 14.6551%; opacity: 0.31; animation-delay: 1.0066s; animation-duration: 3.95096s;"></span><span class="star" style="left: 96.4438%; top: 42.3389%; opacity: 0.37; animation-delay: 2.78801s; animation-duration: 2.8043s;"></span><span class="star" style="left: 98.9661%; top: 1.94722%; opacity: 0.54; animation-delay: 1.94306s; animation-duration: 3.08264s;"></span><span class="star" style="left: 13.5868%; top: 84.9924%; opacity: 0.35; animation-delay: 1.24191s; animation-duration: 4.60042s;"></span><span class="star" style="left: 30.6674%; top: 34.3246%; opacity: 0.2; animation-delay: 1.06293s; animation-duration: 4.12175s;"></span><span class="star" style="left: 58.7804%; top: 34.3851%; opacity: 0.29; animation-delay: 2.57656s; animation-duration: 4.80196s;"></span><span class="star" style="left: 47.8333%; top: 80.0837%; opacity: 0.15; animation-delay: 2.57988s; animation-duration: 2.53739s;"></span><span class="star" style="left: 57.0525%; top: 55.8596%; opacity: 0.34; animation-delay: 2.30775s; animation-duration: 3.43293s;"></span><span class="star" style="left: 94.4811%; top: 5.52776%; opacity: 0.78; animation-delay: 2.482s; animation-duration: 4.75908s;"></span><span class="star" style="left: 65.7285%; top: 88.9262%; opacity: 0.77; animation-delay: 1.66448s; animation-duration: 4.78883s;"></span><span class="star" style="left: 60.0543%; top: 60.8058%; opacity: 0.44; animation-delay: 1.44746s; animation-duration: 3.10524s;"></span><span class="star" style="left: 36.4173%; top: 41.4977%; opacity: 0.26; animation-delay: 0.881942s; animation-duration: 4.85584s;"></span><span class="star" style="left: 62.2571%; top: 59.434%; opacity: 0.54; animation-delay: 0.572003s; animation-duration: 2.34533s;"></span><span class="star" style="left: 55.3219%; top: 23.103%; opacity: 0.27; animation-delay: 0.541266s; animation-duration: 3.96721s;"></span><span class="star" style="left: 97.0259%; top: 21.4178%; opacity: 0.49; animation-delay: 0.311836s; animation-duration: 2.75883s;"></span><span class="star" style="left: 18.7337%; top: 48.9488%; opacity: 0.8; animation-delay: 2.36291s; animation-duration: 4.45402s;"></span></div>
+    </div>
+  </section>
+
+  <section class="wrap reveal show">
+    <div class="section-head">
+      <h2>Why Fluxify</h2>
+      <p>Visual cards and smooth motion instead of plain text blocks.</p>
+    </div>
+
+    <div class="feature-grid">
+      <article class="feature">
+        <div class="icon">S</div>
+        <h3>Secure by Default</h3>
+        <p>Each swap runs through controlled confirmation checkpoints before final release.</p>
+      </article>
+      <article class="feature">
+        <div class="icon">E</div>
+        <h3>Escrow-Style Flow</h3>
+        <p>Fair handling for both sides with transparent status from start to completion.</p>
+      </article>
+      <article class="feature">
+        <div class="icon">F</div>
+        <h3>Fee Transparency</h3>
+        <p>Rates and minimums remain visible and consistent with the fee preview logic.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="wrap process reveal show">
+    <div class="section-head">
+      <h2>The Process</h2>
+      <p>Four steps from request to release.</p>
+    </div>
+
+    <div class="steps">
+      <article class="step"><b>1. Open</b><span>Request with amount and method</span></article>
+      <article class="step"><b>2. Review</b><span>Check terms and fee setup</span></article>
+      <article class="step"><b>3. Confirm</b><span>Protected processing flow</span></article>
+      <article class="step"><b>4. Release</b><span>Finalize after both sides confirm</span></article>
+    </div>
+
+    <div class="end-cta">
+      <h2>Ready to trade?</h2>
+      <p>Review Terms once, then jump into the exchange channel.</p>
+      <a class="cta-btn" href="https://discord.gg/fluxify" target="_blank" rel="noopener noreferrer">Join Fluxify Discord</a>
+    </div>
+  </section>
+
+  <script>
+    const header = document.querySelector(".header");
+    const menuToggle = document.querySelector(".menu-toggle");
+    const mobileBreakpoint = window.matchMedia("(max-width: 700px)");
+
+    function syncMenuState(isOpen) {
+      header.classList.toggle("menu-open", isOpen);
+      menuToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+    }
+
+    menuToggle?.addEventListener("click", () => {
+      syncMenuState(!header.classList.contains("menu-open"));
+    });
+
+    mobileBreakpoint.addEventListener("change", (event) => {
+      if (!event.matches) syncMenuState(false);
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("show");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.18 });
+
+    document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+
+    const stars = document.getElementById("stars");
+    for (let i = 0; i < 120; i += 1) {
+      const s = document.createElement("span");
+      s.className = "star";
+      s.style.left = `${Math.random() * 100}%`;
+      s.style.top = `${Math.random() * 100}%`;
+      s.style.opacity = (0.15 + Math.random() * 0.75).toFixed(2);
+      s.style.animationDelay = `${Math.random() * 2.8}s`;
+      s.style.animationDuration = `${2.2 + Math.random() * 2.8}s`;
+      stars.appendChild(s);
+    }
+  </script>
+
+
+
+
+
+
+
+
+</body></html>
